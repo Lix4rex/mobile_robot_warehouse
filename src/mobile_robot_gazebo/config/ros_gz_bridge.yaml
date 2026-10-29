@@ -1,0 +1,135 @@
+# Pont ROS 2 <-> Gazebo (Tugbot dans le monde world_demo)
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/cmd_vel"
+  gz_topic_name: "/model/tugbot/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/Twist"
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/odom"
+  gz_topic_name: "/model/tugbot/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+# odom -> base_link (DiffDrive)
+- ros_topic_name: "/tf"
+  gz_topic_name: "/model/tugbot/tf"
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+
+# Vérité terrain (OdometryPublisher ajouté dans le monde) : pose réelle du
+# robot dans world_demo, volontairement hors de /tf
+- ros_topic_name: "/ground_truth_pose"
+  gz_topic_name: "/model/tugbot/ground_truth/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/joint_states"
+  gz_topic_name: "/world/world_demo/model/tugbot/joint_state"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  direction: GZ_TO_ROS
+
+# ===================== Lidars =====================
+- ros_topic_name: "/scan"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/scan_front/sensor/scan_front/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/scan_back"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/scan_back/sensor/scan_back/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# Lidar 3D (VLP-16) : nuage de points uniquement, le LaserScan n'a pas de sens en multi-nappes
+- ros_topic_name: "/scan_omni/points"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/scan_omni/sensor/scan_omni/scan/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+# Lidar de contact du crochet d'attelage
+- ros_topic_name: "/gripper/contact_scan"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/gripper/sensor/sensor_contact/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# ===================== IMU =====================
+- ros_topic_name: "/imu"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/imu_link/sensor/imu/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+# ===================== Caméra avant (couleur + profondeur) =====================
+- ros_topic_name: "/camera_front/color/image_raw"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_front/sensor/color/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_front/color/camera_info"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_front/sensor/color/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_front/depth/image_raw"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_front/sensor/depth/depth_image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_front/depth/camera_info"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_front/sensor/depth/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_front/depth/points"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_front/sensor/depth/depth_image/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+# ===================== Caméra arrière (couleur + profondeur) =====================
+- ros_topic_name: "/camera_back/color/image_raw"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_back/sensor/color/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_back/color/camera_info"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_back/sensor/color/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_back/depth/image_raw"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_back/sensor/depth/depth_image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_back/depth/camera_info"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_back/sensor/depth/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera_back/depth/points"
+  gz_topic_name: "/world/world_demo/model/tugbot/link/camera_back/sensor/depth/depth_image/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
