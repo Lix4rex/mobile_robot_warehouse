@@ -924,15 +924,12 @@
     </joint>
 
     <!-- CONTROLERS PLUGINS -->
-    <!-- DIFF DRIVE PLUGIN / WHEELS CONTROLER -->
-    <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
-      <left_joint>wheel_left_joint</left_joint>
-      <right_joint>wheel_right_joint</right_joint>
-      <wheel_separation>0.5605</wheel_separation>
-      <wheel_radius>0.195</wheel_radius>
-      <odom_publish_frequency>20</odom_publish_frequency>
-      <frame_id>odom</frame_id>
-      <child_frame_id>base_link</child_frame_id>
+    <!-- ROS2_CONTROL / WHEELS CONTROLER : les roues sont pilotées par le
+         diff_drive_controller côté ROS (urdf/tugbot_ros2_control.urdf,
+         config/tugbot_controllers.yaml) -->
+    <!-- Le chemin des paramètres est substitué au build (voir CMakeLists.txt) -->
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>@CONTROLLERS_CONFIG@</parameters>
     </plugin>
 
     <!-- GRIPPER RAIL CONTROLER -->
